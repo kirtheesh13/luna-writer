@@ -1,0 +1,443 @@
+/* ==========================================================================
+   LUNA WRITER - WRITING STUDIO STYLES
+   ========================================================================== */
+
+.studio-container {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 1024px) {
+  .studio-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.studio-main-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-2xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.studio-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.studio-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+.status-draft {
+  background-color: var(--bg-surface-muted);
+  color: var(--text-muted);
+}
+
+.status-published {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid var(--color-success-border);
+}
+
+.status-review {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning-border);
+}
+
+/* Studio Title Input */
+.studio-title-input {
+  width: 100%;
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--text-main);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--border-color);
+  padding: 0.5rem 0;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.025em;
+  transition: border-color var(--transition-fast);
+}
+
+.studio-title-input:focus {
+  outline: none;
+  border-bottom-color: var(--primary);
+}
+
+/* Category & Level Selector Row */
+.studio-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.studio-field-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.05em;
+}
+
+.studio-input-select {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  font-size: 0.9rem;
+  color: var(--text-main);
+  transition: border-color var(--transition-fast);
+}
+
+.studio-input-select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* Editor / Preview Toolbar */
+.studio-editor-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.6rem 0;
+  margin-bottom: 1rem;
+}
+
+.studio-mode-toggle {
+  display: inline-flex;
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 0.2rem;
+}
+
+.studio-mode-btn {
+  background: none;
+  border: none;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.studio-mode-btn.active {
+  background-color: var(--bg-surface);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Live Stats Badges */
+.studio-stats-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.825rem;
+  color: var(--text-faint);
+}
+
+.studio-stat-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.stat-value {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* Main Textarea */
+.studio-textarea {
+  width: 100%;
+  min-height: 420px;
+  border: none;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-main);
+  background: transparent;
+  padding: 0.5rem 0;
+}
+
+.studio-textarea:focus {
+  outline: none;
+}
+
+/* Live Preview Box */
+.studio-preview-box {
+  min-height: 420px;
+  padding: 1rem 0;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-main);
+  white-space: pre-wrap;
+}
+
+/* Action Buttons Bar */
+.studio-actions-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.studio-actions-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.studio-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Studio Sidebar (Uploads, Prompts, Guidelines) */
+.studio-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.studio-side-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-2xl);
+  padding: 1.5rem;
+}
+
+.side-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.side-card-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+/* File Upload Dropzone */
+.upload-dropzone {
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: var(--bg-surface-subtle);
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.upload-dropzone:hover, .upload-dropzone.dragover {
+  border-color: var(--primary);
+  background-color: var(--primary-subtle);
+}
+
+.upload-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--primary);
+  margin: 0 auto 0.5rem;
+}
+
+.upload-headline {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
+}
+
+.upload-meta {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  line-height: 1.3;
+}
+
+.upload-hidden-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* B1 Prompts Accordion */
+.prompt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.prompt-item {
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 0.875rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.prompt-item:hover {
+  background-color: var(--bg-surface-muted);
+  border-color: var(--primary-200);
+}
+
+.prompt-category-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.25rem;
+}
+
+.prompt-text {
+  font-size: 0.825rem;
+  color: var(--text-main);
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.prompt-insert-btn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.prompt-insert-btn:hover {
+  text-decoration: underline;
+}
+
+/* Mobile Responsiveness for Studio */
+@media (max-width: 768px) {
+  .studio-main-card {
+    padding: 1.25rem 1rem;
+    border-radius: var(--radius-xl);
+  }
+
+  .studio-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .studio-title-input {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    padding: 0.35rem 0;
+  }
+
+  .studio-meta-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+    margin-bottom: 1rem !important;
+    width: 100% !important;
+  }
+
+  .studio-meta-grid > div {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .studio-input-select {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    font-size: 0.85rem !important;
+  }
+
+  .studio-editor-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .studio-mode-toggle {
+    display: flex;
+    width: 100%;
+  }
+
+  .studio-mode-btn {
+    flex: 1;
+    text-align: center;
+  }
+
+  .studio-stats-group {
+    flex-wrap: wrap;
+    gap: 0.65rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .studio-textarea {
+    min-height: 260px;
+    font-size: 1rem;
+  }
+
+  .studio-actions-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+
+  .studio-actions-left,
+  .studio-actions-right {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .studio-actions-left button,
+  .studio-actions-right button {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem;
+  }
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luna Writer — CEFR (A1–C2) English Reading, Writing &amp; AI Review</title>
+  <meta name="description" content="A polished full-stack platform to read English stories, letters, articles, and emails across all CEFR levels (A1 to C2), write and upload your own work, and receive real-time Gemini AI educational feedback." />
+
+  <!-- Google Fonts: Inter, Merriweather, JetBrains Mono, Lexend -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Lexend:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets (with cache buster) -->
+  <link rel="stylesheet" href="/css/main.css?v=4.3" />
+  <link rel="stylesheet" href="/css/reader.css?v=4.3" />
+  <link rel="stylesheet" href="/css/studio.css?v=4.3" />
+  <link rel="stylesheet" href="/css/review.css?v=4.3" />
+  <link rel="stylesheet" href="/css/settings.css?v=4.3" />
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z'/></svg>" />
+</head>
+<body>
+
+  <!-- Top Sticky Header -->
+  <header class="luna-header" role="banner">
+    <div class="header-container">
+      <!-- Brand Logo -->
+      <a href="/" class="brand-logo" aria-label="Luna Writer Home">
+        <div class="brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 1 12 2z"></path>
+          </svg>
+        </div>
+        <span>Luna Writer</span>
+        <span class="brand-pill">CEFR A1–C2</span>
+      </a>
+
+      <!-- Primary Navigation Links (Distinct Categories & Pages) -->
+      <nav role="navigation" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="/" class="nav-link" id="nav-home">Home</a></li>
+          <li><a href="/stories" class="nav-link" id="nav-stories">Stories</a></li>
+          <li><a href="/letters" class="nav-link" id="nav-letters">Letters</a></li>
+          <li><a href="/articles" class="nav-link" id="nav-articles">Articles</a></li>
+          <li><a href="/emails" class="nav-link" id="nav-emails">Emails</a></li>
+          <li><a href="/studio" class="nav-link" id="nav-studio">Writing Studio</a></li>
+          <li><a href="/my-writing" class="nav-link" id="nav-my-writing">My Writing</a></li>
+          <li><a href="/settings" class="nav-link" id="nav-settings">Settings</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Action Controls -->
+      <div class="header-actions">
+        <!-- Quick Theme Toggle -->
+        <button class="btn btn-ghost btn-icon-only" id="quick-theme-toggle" title="Cycle Theme" aria-label="Toggle theme scheme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Studio CTA -->
+        <a href="/studio" class="btn btn-primary btn-sm" aria-label="Start writing">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Write
+        </a>
+
+        <!-- Mobile Hamburger Toggle -->
+        <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle navigation menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dynamic SPA View Mount -->
+  <main class="main-content" id="app-main-view" role="main">
+    <!-- Populated by JavaScript routers -->
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="luna-footer" role="contentinfo">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="brand-icon" style="width: 24px; height: 24px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 1 12 2z"></path>
+          </svg>
+        </div>
+        <span>Luna Writer &copy; 2026</span>
+      </div>
+
+      <ul class="footer-links">
+        <li><a href="/stories">Stories</a></li>
+        <li><a href="/letters">Letters</a></li>
+        <li><a href="/articles">Articles</a></li>
+        <li><a href="/emails">Emails</a></li>
+        <li><a href="/studio">Writing Studio</a></li>
+        <li><a href="/settings">Customization</a></li>
+      </ul>
+
+      <!-- Real-time Database & AI Engine Pill -->
+      <div class="footer-system-pill" id="footer-status-pill">
+        <span class="status-dot" id="footer-db-dot"></span>
+        <span id="footer-db-text">Checking MongoDB &amp; AI...</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts (with cache buster) -->
+  <script src="/js/api.js?v=4.3"></script>
+  <script src="/js/state.js?v=4.3"></script>
+  <script src="/js/components/toast.js?v=4.3"></script>
+  <script src="/js/components/card.js?v=4.3"></script>
+  <script src="/js/components/readerModal.js?v=4.3"></script>
+  <script src="/js/components/reviewModal.js?v=4.3"></script>
+  <script src="/js/pages/home.js?v=4.3"></script>
+  <script src="/js/pages/category.js?v=4.3"></script>
+  <script src="/js/pages/studio.js?v=4.3"></script>
+  <script src="/js/pages/myWriting.js?v=4.3"></script>
+  <script src="/js/pages/settings.js?v=4.3"></script>
+  <script src="/js/router.js?v=4.3"></script>
+  <script src="/js/app.js?v=4.3"></script>
+</body>
+</html>
