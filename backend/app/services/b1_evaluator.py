@@ -142,12 +142,16 @@ async def evaluate_b1(content: str, title: str = "Untitled", category: str = "st
         )
 
     # 1. Live Gemini model evaluation
-    if settings.GEMINI_API_KEY:
+    if settings.GEMINI_API_KEY and not getattr(settings, "_gemini_key_invalid", False):
         try:
             logger.info(f"Evaluating CEFR (Target: {target_level}) via live Gemini model...")
             return await _evaluate_with_gemini(content, title, category, writing_id, target_level, metrics)
         except Exception as e:
-            logger.warning(f"Gemini evaluation failed: {e}. Falling back to linguistic engine.")
+            if "401" in str(e) or "Unauthorized" in str(e) or "API_KEY_INVALID" in str(e):
+                logger.warning(f"Gemini API key is unauthorized/revoked ({e}). Marking key invalid and switching to high-fidelity CEFR linguistic engine.")
+                settings._gemini_key_invalid = True
+            else:
+                logger.warning(f"Gemini evaluation failed: {e}. Falling back to linguistic engine.")
 
     # 2. Live OpenAI model evaluation
     if settings.OPENAI_API_KEY:
@@ -388,7 +392,7 @@ Output valid JSON matching this exact structure:
 }}
 Do not include markdown wrappers or anything outside the JSON.
 """
-    model_name = settings.AI_MODEL_NAME if "gemini" in settings.AI_MODEL_NAME else "gemini-3-flash-preview"
+    model_name = settings.AI_MODEL_NAME if settings.AI_MODEL_NAME else "gemini-3-flash-preview"
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={settings.GEMINI_API_KEY}"
     payload = json.dumps({
         "contents": [{"parts": [{"text": prompt}]}],
@@ -397,16 +401,20 @@ Do not include markdown wrappers or anything outside the JSON.
     
     req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
     import time
-    for attempt in range(2):
+    for attempt in range(3):
         try:
             with urllib.request.urlopen(req, timeout=30) as resp:
                 res_data = json.loads(resp.read().decode("utf-8"))
-                text_out = res_data["candidates"][0]["content"]["parts"][0]["text"]
+                text_out = res_data["candidates"][0]["content"]["parts"][0]["text"].strip()
+                # Remove markdown fences if model returned them
+                if text_out.startswith("```"):
+                    text_out = re.sub(r"^```(?:json)?\s*", "", text_out)
+                    text_out = re.sub(r"\s*```$", "", text_out).strip()
                 parsed = json.loads(text_out)
                 return _sanitize_ai_response(parsed, writing_id, title, category, target_level, f"Google Gemini ({model_name})")
         except urllib.error.HTTPError as e:
-            if e.code in (500, 503) and attempt == 0:
-                time.sleep(1.5)
+            if e.code in (429, 500, 503) and attempt < 2:
+                time.sleep(2.0 * (attempt + 1))
                 continue
             raise
 
