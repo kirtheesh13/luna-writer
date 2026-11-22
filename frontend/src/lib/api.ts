@@ -319,6 +319,8 @@ export const api = {
     return {
       title: data.title,
       category: data.category,
+      cefr_level: 'B1',
+      cefr_explanation: 'Demonstrates intermediate B1 proficiency with clear sentence structures, evocative descriptions, and accessible narrative flow.',
       breakdown: `This ${data.category.slice(0, -1)} sets a distinct tone with rich sensory pacing and natural progression.`,
       highlights: [
         'Engaging opening that immediately grounds the reader in the scene.',

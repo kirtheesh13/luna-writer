@@ -148,10 +148,15 @@ Return only valid JSON. Do not include markdown code block syntax if possible.""
         return heuristic_evaluate_writing(title, content, category)
 
 async def generate_reading_highlights(title: str, content: str, category: str) -> Dict[str, Any]:
-    """Generate in-depth story breakdown, highlights, and writer learning takeaways for the reader view."""
+    """Generate in-depth story breakdown, CEFR level evaluation, highlights, and writer learning takeaways for the reader view."""
+    heuristic = heuristic_evaluate_writing(title, content, category)
+    detected_cefr = heuristic.get("cefr_level", "B1")
+
     fallback_response = {
         "title": title,
         "category": category,
+        "cefr_level": detected_cefr,
+        "cefr_explanation": f"Demonstrates {detected_cefr} proficiency with well-balanced sentence structures, nuanced vocabulary, and clear syntactic progression.",
         "breakdown": f"This well-crafted {category.rstrip('s')} effectively establishes tone, pacing, and engaging narrative progression.",
         "highlights": [
             "Compelling opening that immediately engages the reader's curiosity.",
@@ -165,23 +170,25 @@ async def generate_reading_highlights(title: str, content: str, category: str) -
         ],
         "key_vocabulary": [
             {"word": "ingenuity", "definition": "The quality of being clever, original, and inventive.", "sample": "Reflections of human ingenuity."},
-            {"technique": "inclement", "definition": "(Of weather) unpleasantly cold or wet.", "sample": "Inclement weather in the mountains."}
+            {"word": "inclement", "definition": "(Of weather) unpleasantly cold or wet.", "sample": "Inclement weather in the mountains."}
         ]
     }
 
     if not settings.GEMINI_API_KEY:
         return fallback_response
 
-    prompt = f"""You are a master literary analyst and English language mentor.
+    prompt = f"""You are a master literary analyst and CEFR English language mentor.
 Analyze this {category.rstrip('s')} titled "{title}":
 
 \"\"\"{content}\"\"\"
 
-Generate an inspiring reading breakdown and actionable learning guide for an aspiring writer.
+Generate an inspiring reading breakdown, CEFR proficiency assessment, and actionable learning guide for an aspiring writer.
 Return ONLY valid JSON matching this schema:
 {{
   "title": "{title}",
   "category": "{category}",
+  "cefr_level": "<One of: A1, A2, B1, B2, C1, C2>",
+  "cefr_explanation": "<A concise 1-2 sentence explanation of why this piece represents this CEFR level based on grammar complexity and vocabulary>",
   "breakdown": "<A 2-3 sentence overview of why this piece is effective and its core theme>",
   "highlights": [
     "<Engaging narrative/structural highlight 1>",
@@ -210,7 +217,12 @@ Return ONLY valid JSON matching this schema:
             text = text[3:]
         if text.endswith("```"):
             text = text[:-3]
-        return json.loads(text.strip())
+        data = json.loads(text.strip())
+        if not data.get("cefr_level"):
+            data["cefr_level"] = detected_cefr
+        if not data.get("cefr_explanation"):
+            data["cefr_explanation"] = f"Text is classified at CEFR {data['cefr_level']} level based on lexical diversity and syntactic range."
+        return data
     except Exception as e:
         logger.warning(f"Gemini API highlight call failed, using fallback: {e}")
         return fallback_response

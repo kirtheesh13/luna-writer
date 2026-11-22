@@ -50,6 +50,8 @@ export interface WritingEvaluation {
 export interface ReadingHighlight {
   title: string;
   category: string;
+  cefr_level?: CefrLevel;
+  cefr_explanation?: string;
   breakdown: string;
   highlights: string[];
   learning_takeaways: {

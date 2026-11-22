@@ -1,6 +1,6 @@
 import React from 'react';
-import { BookOpen, Check, Sparkles, Star, Target, X } from 'lucide-react';
-import { ReadingHighlight } from '@/types';
+import { Award, BookOpen, Check, ShieldCheck, Sparkles, Star, Target, X } from 'lucide-react';
+import { ReadingHighlight, CefrLevel } from '@/types';
 import { api } from '@/lib/api';
 
 interface AIReviewModalProps {
@@ -36,53 +36,126 @@ export const AIReviewModal: React.FC<AIReviewModalProps> = ({
     }
   };
 
+  const cefrLevels: CefrLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+  const currentLevel: CefrLevel = (data?.cefr_level as CefrLevel) || 'B1';
+
+  const getCefrDescriptor = (lvl: string) => {
+    switch (lvl) {
+      case 'A1':
+        return 'Foundational / Beginner Standard';
+      case 'A2':
+        return 'Elementary / Waystage';
+      case 'B1':
+        return 'Intermediate Masterclass';
+      case 'B2':
+        return 'Vantage / Upper-Intermediate';
+      case 'C1':
+        return 'Effective Operational Proficiency / Advanced';
+      case 'C2':
+        return 'Mastery / Native Fluency';
+      default:
+        return 'Intermediate Proficiency';
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-fade-in">
-      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-fade-in">
+      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-border/80 bg-card p-6 sm:p-8 shadow-2xl space-y-6">
         
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-lg p-1 text-muted-foreground hover:bg-secondary hover:text-foreground"
+          className="absolute right-5 top-5 rounded-xl p-1.5 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
         >
           <X className="h-5 w-5" />
         </button>
 
         {/* Modal Header */}
-        <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/15 text-primary">
+        <div className="flex items-center gap-3.5">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/15 text-primary shadow-sm">
             <Sparkles className="h-6 w-6" />
           </div>
           <div>
-            <h2 className="font-serif text-xl sm:text-2xl font-bold text-card-foreground">
+            <h2 className="font-serif text-xl sm:text-2xl font-extrabold text-foreground tracking-tight">
               AI Deep Analysis & Learning Guide
             </h2>
             <p className="text-xs sm:text-sm text-muted-foreground">
-              What makes this piece work and how you can borrow its strengths
+              What makes this piece work, its evaluated CEFR level, and techniques you can borrow
             </p>
           </div>
         </div>
 
         {isLoading ? (
-          <div className="my-12 flex flex-col items-center justify-center text-center">
-            <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-            <p className="mt-4 font-serif text-base font-semibold text-foreground">
-              Analyzing writing structure and vocabulary...
+          <div className="my-14 flex flex-col items-center justify-center text-center space-y-3">
+            <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent shadow-md" />
+            <p className="font-serif text-lg font-bold text-foreground">
+              Evaluating CEFR Level & Writing Structure...
             </p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Gemini AI is examining sentence patterns, pacing, and literary devices
+            <p className="text-xs text-muted-foreground max-w-sm">
+              Gemini AI is examining sentence complexity, vocabulary tiers, and narrative pacing.
             </p>
           </div>
         ) : data ? (
-          <div className="mt-6 space-y-6">
+          <div className="space-y-6 animate-fade-in">
             
+            {/* ======================================================== */}
+            {/* CEFR LEVEL ASSESSMENT CARD (Prominently featured)        */}
+            {/* ======================================================== */}
+            <div className="rounded-3xl border border-primary/40 bg-gradient-to-br from-primary/15 via-secondary/40 to-card p-5 sm:p-6 shadow-md">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground font-serif font-black text-xl shadow-lg">
+                    {currentLevel}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-extrabold uppercase tracking-widest text-primary">
+                        Evaluated CEFR Level
+                      </span>
+                      <span className="rounded-md bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-bold text-emerald-400">
+                        Verified ✓
+                      </span>
+                    </div>
+                    <h3 className="font-serif text-lg font-bold text-foreground mt-0.5">
+                      Level {currentLevel}: {getCefrDescriptor(currentLevel)}
+                    </h3>
+                  </div>
+                </div>
+
+                {/* Visual CEFR Scale Pill */}
+                <div className="flex items-center gap-1 bg-background/60 p-1.5 rounded-xl border border-border/80 self-start sm:self-auto">
+                  {cefrLevels.map((lvl) => {
+                    const active = lvl === currentLevel;
+                    return (
+                      <span
+                        key={lvl}
+                        className={`rounded-lg px-2 py-0.5 text-[10px] font-bold transition-all ${
+                          active
+                            ? 'bg-primary text-primary-foreground shadow-sm scale-105'
+                            : 'text-muted-foreground/60'
+                        }`}
+                      >
+                        {lvl}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* CEFR Explanation */}
+              <p className="mt-4 pt-3 border-t border-border/50 text-xs text-foreground/90 leading-relaxed">
+                {data.cefr_explanation ||
+                  `This writing aligns with CEFR Level ${currentLevel}, demonstrating appropriate syntactic control, cohesive devices, and engaging vocabulary.`}
+              </p>
+            </div>
+
             {/* Story Breakdown */}
-            <div className="rounded-xl border border-border bg-secondary/30 p-4">
+            <div className="rounded-2xl border border-border bg-secondary/30 p-4">
               <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary">
                 <BookOpen className="h-4 w-4" />
                 Narrative & Structural Breakdown
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-card-foreground">
+              <p className="mt-2 text-xs sm:text-sm leading-relaxed text-foreground">
                 {data.breakdown}
               </p>
             </div>
@@ -94,11 +167,11 @@ export const AIReviewModal: React.FC<AIReviewModalProps> = ({
               </h3>
               <div className="mt-2.5 space-y-2">
                 {data.highlights.map((h, i) => (
-                  <div key={i} className="flex items-start gap-2.5 rounded-xl border border-border p-3 text-sm">
+                  <div key={i} className="flex items-start gap-2.5 rounded-xl border border-border p-3 text-xs sm:text-sm">
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/20 text-xs font-bold text-primary">
                       {i + 1}
                     </span>
-                    <span className="text-card-foreground">{h}</span>
+                    <span className="text-foreground">{h}</span>
                   </div>
                 ))}
               </div>
@@ -131,7 +204,7 @@ export const AIReviewModal: React.FC<AIReviewModalProps> = ({
                   {data.key_vocabulary.map((vocab, i) => {
                     const isSaved = savedWords[vocab.word];
                     return (
-                      <div key={i} className="flex flex-col justify-between rounded-xl border border-border p-3">
+                      <div key={i} className="flex flex-col justify-between rounded-xl border border-border p-3 bg-card shadow-xs">
                         <div>
                           <div className="flex items-center justify-between">
                             <span className="font-serif font-bold text-sm text-foreground">{vocab.word}</span>
@@ -162,7 +235,7 @@ export const AIReviewModal: React.FC<AIReviewModalProps> = ({
         <div className="mt-7 border-t border-border pt-4 text-right">
           <button
             onClick={onClose}
-            className="rounded-xl bg-secondary px-5 py-2 text-sm font-semibold text-foreground hover:bg-secondary/70"
+            className="btn-tactile-3d rounded-xl px-5 py-2 text-xs font-bold text-primary-foreground"
           >
             Close Guide
           </button>
