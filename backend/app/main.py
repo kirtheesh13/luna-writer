@@ -1,51 +1,38 @@
 import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from backend.app.config import settings
 from backend.app.database import db_manager
-from backend.app.routers import (
-    writings,
-    reviews,
-    bookmarks,
-    uploads,
-    settings as settings_router,
-    status as status_router,
-)
+from backend.app.routers import auth, evaluation, reading, uploads, vocabulary, writings
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 )
 logger = logging.getLogger("luna_writer")
 
-FRONTEND_DIR = Path(__file__).resolve().parent.parent.parent / "frontend"
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Starting up Luna Writer backend...")
+    logger.info("Starting up Luna Writer & Masterclass API...")
     await db_manager.connect()
     yield
-    logger.info("Shutting down Luna Writer backend...")
+    logger.info("Shutting down Luna Writer & Masterclass API...")
+    await db_manager.disconnect()
 
 app = FastAPI(
-    title="Luna Writer API",
-    description=(
-        "Full-stack API for reading English writing across stories, letters, articles, and emails, "
-        "managing drafts, and evaluating English text suitability for Cambridge B1 (PET) learners."
-    ),
-    version="1.0.0",
+    title=settings.PROJECT_NAME,
+    version=settings.PROJECT_VERSION,
     lifespan=lifespan,
     docs_url="/docs",
     redoc_url="/redoc"
 )
 
-# CORS configuration
+# Enable CORS for local Vite development and production
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -54,48 +41,38 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Register API routers
+# Register API Routers
+app.include_router(auth.router)
 app.include_router(writings.router)
-app.include_router(reviews.router)
-app.include_router(bookmarks.router)
+app.include_router(reading.router)
+app.include_router(evaluation.router)
+app.include_router(vocabulary.router)
 app.include_router(uploads.router)
-app.include_router(settings_router.router)
-app.include_router(status_router.router)
 
 @app.get("/api/health", tags=["Health"])
 async def health_check():
     return {
         "status": "healthy",
-        "app": settings.PROJECT_NAME,
+        "project": settings.PROJECT_NAME,
         "version": settings.PROJECT_VERSION,
-        "database_mode": "Live MongoDB" if db_manager.is_live_mongo else "Embedded JSON MongoDB"
+        "database": "mongodb_beanie" if db_manager.is_connected_to_mongo else "embedded_persistent",
+        "gemini_ai": bool(settings.GEMINI_API_KEY)
     }
 
-# Mount static frontend directories
-if FRONTEND_DIR.exists():
-    css_dir = FRONTEND_DIR / "css"
-    js_dir = FRONTEND_DIR / "js"
-    if css_dir.exists():
-        app.mount("/css", StaticFiles(directory=str(css_dir)), name="css")
-    if js_dir.exists():
-        app.mount("/js", StaticFiles(directory=str(js_dir)), name="js")
+# Mount Frontend in Production if built
+FRONTEND_DIST = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"
+if FRONTEND_DIST.exists():
+    app.mount("/assets", StaticFiles(directory=FRONTEND_DIST / "assets"), name="assets")
 
-# Serve SPA index.html for all page routes
-CATEGORY_ROUTES = ["/stories", "/letters", "/articles", "/emails", "/studio", "/my-writing", "/settings"]
-
-@app.get("/")
-async def serve_index():
-    index_file = FRONTEND_DIR / "index.html"
-    if index_file.exists():
-        return FileResponse(index_file)
-    return {"message": "Frontend index.html not found"}
-
-@app.get("/{full_path:path}")
-async def catch_all_spa(full_path: str):
-    # If API or docs route, don't interfere
-    if full_path.startswith("api/") or full_path in ("docs", "redoc", "openapi.json"):
-        return {"error": "Endpoint not found"}
-    index_file = FRONTEND_DIR / "index.html"
-    if index_file.exists():
-        return FileResponse(index_file)
-    return {"message": f"Path /{full_path} not found"}
+    @app.get("/")
+    async def serve_root():
+        return FileResponse(FRONTEND_DIST / "index.html")
+    
+    @app.get("/{full_path:path}")
+    async def serve_frontend(full_path: str):
+        if full_path.startswith("api"):
+            return None
+        file_path = FRONTEND_DIST / full_path
+        if file_path.exists() and file_path.is_file():
+            return FileResponse(file_path)
+        return FileResponse(FRONTEND_DIST / "index.html")

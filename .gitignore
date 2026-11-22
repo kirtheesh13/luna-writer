@@ -1,19 +1,33 @@
-# Python virtualenv
+# Python virtualenv & cache
 .venv/
 venv/
-ENV/
-env/
-
-# Python cache
 __pycache__/
 *.py[cod]
-*$py.class
+*.pyc
 
-# Environment secrets
+# Environment secrets & local config
 .env
+.env.local
 
-# Uploads temporary directory
+# Node modules & Vite build cache
+node_modules/
+frontend/node_modules/
+frontend/.tmp/
+frontend/dist/.vite/
+
+# Database files & logs
+.data/
+.logs/
+*.log
+
+# Legacy backups (preserved locally)
+frontend_legacy/
+backend_legacy/
+
+# Executables & Binaries
+cloudflared.exe
+*.exe
+
+# Uploads directory
 uploads/*
 !uploads/.gitkeep
-
-.vercel

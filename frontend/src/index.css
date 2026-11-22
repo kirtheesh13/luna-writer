@@ -1,0 +1,302 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* =========================================================================
+     1. MODERN MIDNIGHT (Default: Deep obsidian, moonlit violet & celestial indigo)
+     ========================================================================= */
+  :root,
+  [data-theme="midnight"] {
+    --background: 224 71% 4%;        /* #050811 ultra-deep cosmic */
+    --foreground: 210 40% 98%;       /* #f8fafc */
+    --card: 224 50% 8%;             /* #0a1020 */
+    --card-foreground: 210 40% 98%;
+    --card-hover: 224 50% 12%;
+    --surface: 224 50% 10%;
+    --surface-border: 224 45% 18%;
+    --primary: 258 90% 66%;          /* #8b5cf6 luminous violet */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 258 90% 60%;
+    --secondary: 224 40% 14%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 224 40% 15%;
+    --muted-foreground: 217 25% 65%;
+    --accent: 190 95% 55%;           /* #06b6d4 cyan star */
+    --accent-foreground: 224 71% 4%;
+    --border: 224 45% 18%;
+    --input: 224 45% 18%;
+    --ring: 258 90% 66%;
+    --radius: 1rem;
+    --success: 152 76% 45%;
+    --warning: 38 92% 50%;
+    --destructive: 0 84% 60%;
+  }
+
+  /* =========================================================================
+     2. CYBERPUNK HOLO (High-tech neon cyan, electric magenta & dark grid)
+     ========================================================================= */
+  [data-theme="cyberpunk"] {
+    --background: 235 60% 4%;        /* #040714 */
+    --foreground: 180 100% 98%;      /* #f0ffff */
+    --card: 235 55% 8%;              /* #090e24 */
+    --card-foreground: 180 100% 98%;
+    --card-hover: 235 55% 13%;
+    --surface: 235 55% 10%;
+    --surface-border: 185 85% 35%;
+    --primary: 186 100% 50%;         /* #00f0ff electric cyan */
+    --primary-foreground: 235 60% 4%;
+    --primary-hover: 186 100% 45%;
+    --secondary: 235 45% 16%;
+    --secondary-foreground: 180 100% 98%;
+    --muted: 235 45% 16%;
+    --muted-foreground: 186 40% 65%;
+    --accent: 326 100% 55%;          /* #ff1a8c magenta pulse */
+    --accent-foreground: 0 0% 100%;
+    --border: 185 80% 22%;
+    --input: 185 80% 22%;
+    --ring: 186 100% 50%;
+    --radius: 0.75rem;
+    --success: 145 100% 45%;
+    --warning: 45 100% 50%;
+    --destructive: 345 100% 55%;
+  }
+
+  /* =========================================================================
+     3. OXFORD LITERARY & VINTAGE STUDY (Rich mahogany, antique gold & parchment)
+     ========================================================================= */
+  [data-theme="oxford"] {
+    --background: 34 40% 95%;        /* #f9f5ed ivory parchment */
+    --foreground: 24 35% 14%;        /* #2b1d14 deep espresso ink */
+    --card: 32 35% 90%;              /* #efe7d6 */
+    --card-foreground: 24 35% 14%;
+    --card-hover: 32 35% 85%;
+    --surface: 32 30% 86%;
+    --surface-border: 30 25% 72%;
+    --primary: 28 72% 35%;           /* #994714 antique burnished leather */
+    --primary-foreground: 34 40% 95%;
+    --primary-hover: 28 72% 28%;
+    --secondary: 32 25% 82%;
+    --secondary-foreground: 24 35% 14%;
+    --muted: 32 25% 84%;
+    --muted-foreground: 24 20% 42%;
+    --accent: 42 75% 42%;            /* #b98616 gold leaf */
+    --accent-foreground: 34 40% 95%;
+    --border: 30 25% 74%;
+    --input: 30 25% 74%;
+    --ring: 28 72% 35%;
+    --radius: 0.75rem;
+    --success: 135 45% 32%;
+    --warning: 35 80% 45%;
+    --destructive: 5 65% 45%;
+  }
+
+  /* =========================================================================
+     4. EMERALD SANCTUARY (Lush jade moss, forest botanical & emerald glow)
+     ========================================================================= */
+  [data-theme="emerald"] {
+    --background: 160 55% 4%;        /* #03140e deep moss obsidian */
+    --foreground: 140 40% 98%;       /* #f2faf5 */
+    --card: 160 45% 8%;              /* #082218 */
+    --card-foreground: 140 40% 98%;
+    --card-hover: 160 45% 12%;
+    --surface: 160 45% 10%;
+    --surface-border: 155 40% 20%;
+    --primary: 150 75% 45%;          /* #1cd579 vibrant emerald */
+    --primary-foreground: 160 55% 4%;
+    --primary-hover: 150 75% 40%;
+    --secondary: 160 35% 14%;
+    --secondary-foreground: 140 40% 98%;
+    --muted: 160 35% 15%;
+    --muted-foreground: 150 25% 65%;
+    --accent: 45 90% 55%;            /* botanical sunlight */
+    --accent-foreground: 160 55% 4%;
+    --border: 155 40% 20%;
+    --input: 155 40% 20%;
+    --ring: 150 75% 45%;
+    --radius: 1rem;
+    --success: 150 75% 45%;
+    --warning: 38 90% 50%;
+    --destructive: 0 80% 60%;
+  }
+
+  /* =========================================================================
+     5. SYNTHWAVE SUNSET (Twilight plum, neon coral & warm twilight horizon)
+     ========================================================================= */
+  [data-theme="sunset"] {
+    --background: 285 55% 5%;        /* #120516 twilight plum */
+    --foreground: 330 40% 98%;       /* #fdf5f8 */
+    --card: 285 45% 9%;              /* #1f0b27 */
+    --card-foreground: 330 40% 98%;
+    --card-hover: 285 45% 14%;
+    --surface: 285 45% 11%;
+    --surface-border: 330 50% 24%;
+    --primary: 335 92% 60%;          /* #fa2d7e neon coral */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 335 92% 54%;
+    --secondary: 285 35% 16%;
+    --secondary-foreground: 330 40% 98%;
+    --muted: 285 35% 16%;
+    --muted-foreground: 330 25% 68%;
+    --accent: 25 100% 60%;           /* warm sunset peach */
+    --accent-foreground: 285 55% 5%;
+    --border: 330 50% 24%;
+    --input: 330 50% 24%;
+    --ring: 335 92% 60%;
+    --radius: 1rem;
+    --success: 145 70% 45%;
+    --warning: 35 95% 52%;
+    --destructive: 350 90% 60%;
+  }
+
+  /* =========================================================================
+     6. PORCELAIN LUXURY (Clean architectural white, frosted glass & sapphire)
+     ========================================================================= */
+  [data-theme="minimal"] {
+    --background: 0 0% 100%;         /* pure pristine white */
+    --foreground: 224 71% 7%;        /* #0a0f1d sharp text */
+    --card: 220 30% 98%;             /* #f8fafc */
+    --card-foreground: 224 71% 7%;
+    --card-hover: 220 30% 94%;
+    --surface: 220 25% 92%;
+    --surface-border: 220 20% 84%;
+    --primary: 224 95% 55%;          /* #1d68f5 royal sapphire */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 224 95% 48%;
+    --secondary: 220 25% 94%;
+    --secondary-foreground: 224 71% 7%;
+    --muted: 220 25% 94%;
+    --muted-foreground: 220 15% 45%;
+    --accent: 250 85% 60%;
+    --accent-foreground: 0 0% 100%;
+    --border: 220 20% 86%;
+    --input: 220 20% 86%;
+    --ring: 224 95% 55%;
+    --radius: 0.875rem;
+    --success: 145 75% 38%;
+    --warning: 38 95% 48%;
+    --destructive: 0 85% 58%;
+  }
+
+  /* =========================================================================
+     7. SOLAR SOVEREIGN (Deep imperial bronze, obsidian & sovereign gold)
+     ========================================================================= */
+  [data-theme="solar"] {
+    --background: 35 45% 4%;         /* #100b04 */
+    --foreground: 45 40% 98%;        /* #fdfbf7 */
+    --card: 35 40% 8%;               /* #1b1308 */
+    --card-foreground: 45 40% 98%;
+    --card-hover: 35 40% 12%;
+    --surface: 35 40% 10%;
+    --surface-border: 42 65% 24%;
+    --primary: 43 96% 56%;           /* #f5be18 sovereign gold */
+    --primary-foreground: 35 45% 4%;
+    --primary-hover: 43 96% 48%;
+    --secondary: 35 30% 14%;
+    --secondary-foreground: 45 40% 98%;
+    --muted: 35 30% 15%;
+    --muted-foreground: 40 25% 65%;
+    --accent: 20 95% 55%;            /* imperial amber */
+    --accent-foreground: 0 0% 100%;
+    --border: 42 65% 22%;
+    --input: 42 65% 22%;
+    --ring: 43 96% 56%;
+    --radius: 1rem;
+    --success: 145 70% 45%;
+    --warning: 43 96% 56%;
+    --destructive: 0 80% 58%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground transition-colors duration-300 antialiased selection:bg-primary/30 selection:text-primary min-h-screen overflow-x-hidden;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* =========================================================================
+   3D PERSPECTIVE & DEPTH UTILITIES
+   ========================================================================= */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-2000 {
+  perspective: 2000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* 3D Interactive Card Lift */
+.card-3d-interactive {
+  transform-style: preserve-3d;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease;
+}
+
+.card-3d-interactive:hover {
+  transform: translateY(-8px) scale(1.015) rotateX(2deg) rotateY(-1.5deg);
+  box-shadow: 0 20px 40px -10px hsl(var(--primary) / 0.25), 0 10px 20px -5px rgba(0,0,0,0.4);
+}
+
+/* 3D Embossed Button */
+.btn-3d-primary {
+  position: relative;
+  transition: all 0.15s ease-out;
+  box-shadow: 0 5px 0 0 hsl(var(--primary-hover)), 0 8px 16px -2px hsl(var(--primary) / 0.4);
+}
+
+.btn-3d-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 0 hsl(var(--primary-hover)), 0 12px 24px -2px hsl(var(--primary) / 0.5);
+}
+
+.btn-3d-primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 0 hsl(var(--primary-hover)), 0 4px 8px -1px hsl(var(--primary) / 0.3);
+}
+
+/* 3D Glassmorphism Panel */
+.glass-panel-3d {
+  background: radial-gradient(135% 100% at 50% 0%, hsl(var(--card) / 0.85) 0%, hsl(var(--card) / 0.65) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid hsl(var(--border) / 0.7);
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* 3D Floating Celestial Sphere */
+.sphere-3d-glow {
+  background: radial-gradient(circle at 35% 30%, hsl(var(--primary) / 0.9) 0%, hsl(var(--accent) / 0.7) 45%, hsl(var(--card)) 85%);
+  box-shadow: inset -8px -10px 25px rgba(0,0,0,0.6), 0 0 50px 10px hsl(var(--primary) / 0.45);
+}
+
+/* Reading Typography */
+body[data-font="serif"] {
+  font-family: 'Merriweather', 'Georgia', serif;
+}
+body[data-font="sans"] {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+body[data-font="mono"] {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* Custom Layout Widths */
+.reader-container-compact {
+  max-width: 680px;
+}
+.reader-container-comfortable {
+  max-width: 840px;
+}
+.reader-container-wide {
+  max-width: 1080px;
+}

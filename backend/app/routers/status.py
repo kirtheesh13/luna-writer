@@ -11,12 +11,12 @@ async def system_status():
     if settings.OPENAI_API_KEY:
         engine_label = f"OpenAI ({settings.AI_MODEL_NAME})"
         mode_label = "Live OpenAI Connected"
-    elif settings.GEMINI_API_KEY:
+    elif settings.GEMINI_API_KEY and not getattr(settings, "_gemini_key_invalid", False):
         engine_label = f"Google Gemini ({settings.AI_MODEL_NAME})"
         mode_label = "Live Gemini Connected"
     else:
-        engine_label = "Luna B1 Educational Linguistic Engine (Demo Heuristic Mode)"
-        mode_label = "Demo / Built-in Linguistic Engine"
+        engine_label = "Luna B1 Educational Linguistic Engine"
+        mode_label = "CEFR Linguistic Engine (Active)"
 
     ai_status = {
         "engine": engine_label,

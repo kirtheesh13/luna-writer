@@ -549,5 +549,356 @@ Anthropogenic noise—characterized by the pervasive hum of combustion engines, 
 Conversely, acoustic ecologists advocate for the intentional integration of biophonic sound sanctuaries. Incorporating cascading water features, dense botanical windbreaks, and resonant stone colonnades does not merely attenuate decibel spikes; it reintroduces harmonic equilibrium into the civic arena. When city residents are granted moments to perceive the rustle of deciduous leaves or the melodic cadence of avian calls, their sensory faculties experience a quantifiable restorative respite.
 
 Ultimately, reimagining the urban acoustic environment necessitates an ideological transition. We must cease construing silence as an empty void to be colonized by mechanical dissonance, and instead cultivate acoustic biodiversity as an indispensable public commons."""
+        },
+        # ================= C2 STORY =================
+        {
+            "id": "story-007",
+            "title": "The Resonant Chamber of Master Alistair",
+            "category": "stories",
+            "topic": "Mastery Fiction",
+            "level": "C2",
+            "status": "published",
+            "visibility": "public",
+            "author_name": "Valerie Saint-Clair",
+            "description": "A profound exploration of acoustic architecture, generational artistry, and existential impermanence in an alpine luthier workshop.",
+            "tags": ["Luthier", "Mastery", "Art", "Acoustics"],
+            "word_count": 445,
+            "reading_time_minutes": 3,
+            "is_sample": True,
+            "created_at": base_time - timedelta(days=1),
+            "updated_at": base_time - timedelta(days=1),
+            "content": """Perched precipitously above the misty gorges of the Val d'Aosta, Master Alistair’s atelier smelled faintly of aged spruce resin, colophony, and centuries of dried animal glue. For five decades, musicians from Vienna to Saint Petersburg had ascended this alpine path not merely to commission violoncellos, but to submit to Alistair’s relentless auditory interrogation. To him, timbre was never an accidental consequence of craftsmanship; it was an existential dialogue between organic decay and acoustic transcendence.
+
+On an autumn morning punctuated by crisp alpine winds, an internationally renowned concertmaster arrived bearing an heirloom instrument whose resonance had mysteriously calcified. The performer lamented that despite immaculate mechanical adjustments, the violoncello resisted emotional inflection. Alistair examined the arching of the belly with calloused, discerning fingertips. He discerned microscopic fissures along the purfling where timber harvested in 1720 had subtly warped under unfamiliar continental humidity.
+
+Rather than imposing aggressive corrective interventions, Alistair withdrew to his drying vault to select a sliver of Bosnian maple seasoned during his own grandfather’s tenure. Over three weeks of contemplative labor, he refashioned the soundpost with micrometric precision. When the bow finally grazed the strings in the twilight chamber, the resultant tone surged through the rafters—not as an arrogant exhibition of volume, but as an ethereal, mournful luminescence that held both luthier and virtuoso in breathless reverie."""
+        },
+        # ================= A2 & B2 & C1 LETTERS =================
+        {
+            "id": "letter-006",
+            "title": "Thank You for the Wonderful Weekend Visit",
+            "category": "letters",
+            "topic": "Personal Gratitude",
+            "level": "A2",
+            "status": "published",
+            "visibility": "public",
+            "author_name": "Ben Taylor",
+            "description": "A warm elementary letter thanking relatives for hospitality, home-cooked food, and weekend walks.",
+            "tags": ["Family", "Gratitude", "Weekend", "Friendly"],
+            "word_count": 148,
+            "reading_time_minutes": 1,
+            "is_sample": True,
+            "created_at": base_time - timedelta(days=2),
+            "updated_at": base_time - timedelta(days=2),
+            "content": """Dear Aunt Claire and Uncle George,
+
+Thank you so much for the wonderful weekend at your countryside cottage. I had a great time with you and my cousins.
+
+The bedroom was very comfortable, and I slept very well after our long walk around the lake. Aunt Claire, your homemade apple pie was delicious! I told my mother about it, and she wants you to share the recipe with her.
+
+I arrived home safely on Sunday evening at six o'clock. The train was on time, and my father met me at the station. 
+
+Please visit us in the city next month. We can have dinner together at our favorite Italian restaurant near the river.
+
+With lots of love,  
+Ben"""
+        },
+        {
+            "id": "letter-007",
+            "title": "Formal Application for an Environmental Internship",
+            "category": "letters",
+            "topic": "Job Application",
+            "level": "B2",
+            "status": "published",
+            "visibility": "public",
+            "author_name": "Julianna Meyer",
+            "description": "A structured, persuasive cover letter applying for a sustainability policy internship with an international NGO.",
+            "tags": ["Career", "Environment", "Internship", "Formal"],
+            "word_count": 310,
+            "reading_time_minutes": 2,
+            "is_sample": True,
+            "created_at": base_time - timedelta(days=3),
+            "updated_at": base_time - timedelta(days=3),
+            "content": """Dear Hiring Committee,
+
+I am writing to express my enthusiastic interest in the Sustainability Policy Internship currently advertised on your organization's website. As a final-year undergraduate student in Environmental Economics at the University of Edinburgh, I have long admired your advocacy for circular economic frameworks across Northern Europe.
+
+Throughout my academic coursework, I have developed a robust command of qualitative policy analysis and quantitative environmental data modeling. For my undergraduate dissertation, I conducted empirical research on municipal waste reduction schemes across twelve Scottish municipalities, analyzing how targeted financial incentives influence household recycling compliance. This project required extensive statistical evaluation using R and Python, as well as synthesizing complex regulatory directives into accessible policy briefs for civic stakeholders.
+
+Furthermore, my experience as Vice-President of our campus Green Society has honed my project coordination and cross-cultural communication abilities. Last semester, I spearheaded a renewable energy petition campaign that engaged over 2,500 students and resulted in the university administration committing to a 20% increase in rooftop solar installations by 2028.
+
+Your organization's upcoming urban resilience initiative aligns seamlessly with my long-term commitment to sustainable metropolitan development. I am eager to contribute my analytical rigour, meticulous research capabilities, and collaborative mindset to your team.
+
+Thank you for your consideration. I have attached my curriculum vitae and writing sample for your review, and I welcome the opportunity to discuss my qualifications further in an interview.
+
+Yours faithfully,  
+Julianna Meyer"""
+        },
+        {
+            "id": "letter-008",
+            "title": "Formal Proposal to the Heritage Conservation Trust",
+            "category": "letters",
+            "topic": "Policy & Heritage",
+            "level": "C1",
+            "status": "published",
+            "visibility": "public",
+            "author_name": "Arthur Pendelton",
+            "description": "A high-level scholarly proposal articulating adaptive conservation strategies for a maritime shipyard.",
+            "tags": ["Heritage", "Conservation", "Maritime", "Scholarly"],
+            "word_count": 348,
+            "reading_time_minutes": 2,
+            "is_sample": True,
+            "created_at": base_time - timedelta(days=2),
+            "updated_at": base_time - timedelta(days=2),
+            "content": """Dear Members of the Heritage Advisory Council,
+
+I am submitting for your formal appraisal this strategic policy recommendation regarding the preservation and adaptive reuse of the historic dry docks situated along the western estuary.
+
+As urban developers accelerate speculative real estate endeavors throughout the maritime corridor, our civic landscape confronts the imminent eradication of an architectural corpus indispensable to our industrial lineage. These eighteenth-century dry docks embody extraordinary stone masonry techniques and hydraulic ingenuity that earned the port its esteemed international reputation.
+
+Rather than succumbing to anachronistic demolition or superficial facadism, we advocate for an enlightened conservation paradigm. Precedents established across comparable Baltic and North Sea ports demonstrate that such monumental maritime infrastructure can be imaginatively transformed into thriving cultural arenas, artisanal boatbuilding conservatories, and interactive civic spaces. Such adaptive reuse simultaneously invigorates economic vitality and honors our intangible working-class maritime heritage.
+
+We respectfully request an audience during your forthcoming quarterly convened session to deliver an exhaustive architectural and structural feasibility report.
+
+With profound respect and civic dedication,  
+Arthur Pendelton, MA  
+Director of the Estuary Heritage Conservancy"""
+        },
+        # ================= A2 & B2 & C2 ARTICLES =================
+        {
+            "id": "article-006",
+            "title": "Why Walking to Work Changes Your Morning",
+            "category": "articles",
+            "topic": "Healthy Living",
+            "level": "A2",
+            "status": "published",
+            "visibility": "public",
+            "author_name": "Daniel Kim",
+            "description": "How a simple 20-minute daily morning walk can boost energy, improve focus, and reduce stress.",
+            "tags": ["Health", "Walking", "Routine", "Energy"],
+            "word_count": 185,
+            "reading_time_minutes": 1,
+            "is_sample": True,
+            "created_at": base_time - timedelta(days=3),
+            "updated_at": base_time - timedelta(days=3),
+            "content": """Many people take the bus or drive their car to work every day. But last year, I made a big change: I started walking twenty minutes to my office every morning.
+
+At first, it was difficult to wake up earlier. However, after two weeks, I noticed amazing benefits. When you walk in the fresh air, your body wakes up naturally. You can listen to the birds, watch the trees change colors in autumn, and see friendly neighbors walking their dogs.
+
+Also, walking is very good for your health. Doctors say that thirty minutes of light exercise every day helps your heart and makes you feel less stressed. Because I walk in the morning, I feel more energetic and ready to work.
+
+If your office is too far, you can try getting off the bus two stops earlier. Try it for one week, and you will see how much better your mornings become!"""
+        },
+        {
+            "id": "article-007",
+            "title": "Urban Green Rooftops: Reimagining European Cities",
+            "category": "articles",
+            "topic": "Environment & Architecture",
+            "level": "B2",
+            "status": "published",
+            "visibility": "public",
+            "author_name": "Siddharth Rao",
+            "description": "Examining how living roofs mitigate the urban heat island effect, enhance biodiversity, and improve mental wellbeing.",
+            "tags": ["Architecture", "Cities", "Green Energy", "Sustainability"],
+            "word_count": 332,
+            "reading_time_minutes": 2,
+            "is_sample": True,
+            "created_at": base_time - timedelta(days=2),
+            "updated_at": base_time - timedelta(days=2),
+            "content": """As metropolitan areas contend with escalating summer heatwaves and dense concrete infrastructure, urban planners are turning their attention upward. Green roofs—architectural systems that replace conventional asphalt with living blankets of sedum, wild grasses, and native flowering flora—are transitioning from niche ecological experiments into mandatory municipal standards across major European cities.
+
+The ecological merits of vegetative roofs are both diverse and measurable. Foremost among them is their capacity to counteract the 'urban heat island' effect. Dense concrete buildings absorb solar radiation during daylight hours and release it slowly throughout the night, drastically elevating ambient city temperatures. Living vegetation, through natural evapotranspiration, cools surrounding air by up to four degrees Celsius. Furthermore, green roofs absorb up to 70% of sudden precipitation, relieving immense pressure from overwhelmed stormwater drainage networks during heavy thunderstorms.
+
+Beyond infrastructural resilience, these rooftop oases foster vital urban biodiversity. In cities such as Basel and Paris, rooftop gardens have become sanctuaries for wild bee colonies, migratory songbirds, and pollinating butterflies that struggle to survive at street level. Moreover, when designed as accessible community gardens, they offer office workers restorative green sanctuaries that measurably reduce psychological stress.
+
+Implementing green roofs requires rigorous engineering—particularly regarding root barriers and load-bearing capacities. Nonetheless, as climate adaptation demands immediate civic action, living roofs illustrate how thoughtful design can harmonize urban development with nature."""
+        },
+        {
+            "id": "article-008",
+            "title": "On the Epistemology of Silence in Modern Prose",
+            "category": "articles",
+            "topic": "Literary Philosophy",
+            "level": "C2",
+            "status": "published",
+            "visibility": "public",
+            "author_name": "Prof. Alistair Sterling",
+            "description": "A profound literary critique analyzing subtext, syntactic omission, and negative space in contemporary writing.",
+            "tags": ["Philosophy", "Literature", "Critique", "Mastery"],
+            "word_count": 420,
+            "reading_time_minutes": 3,
+            "is_sample": True,
+            "created_at": base_time - timedelta(days=1),
+            "updated_at": base_time - timedelta(days=1),
+            "content": """Contemporary prose frequently mistakes informational density for aesthetic profundity. In an era inundated with incessant communicative excess, literary works that aggressively over-articulate every psychological nuance invariably deaden the reader’s imaginative complicity. By contrast, the hallmarks of truly consummate literary mastery lie not in exhaustive verbosity, but in the deliberate, rigorous choreography of negative space—the syntactic cadence of silence.
+
+From the sparser late narratives of Beckett to the deceptive surface simplicity of J.M. Coetzee, the most indelible aesthetic reverberations occur precisely where language falters or deliberately recedes. The unsaid is never a vacuum; rather, it is a pressurized container of latent consequence. When an author withholds an explicit psychological deduction, the burden of ethical interpretation shifts to the reader. Language ceases to function as a didactic vessel and transforms into an evocative acoustic threshold.
+
+Furthermore, syntactic ellipsis mirrors the fundamental fallibility of human recollection. Our psychic architecture does not experience reality as a seamless cinematic continuum, but as fractured, luminous epiphanies suspended between expanses of ambiguity. A prose style that presumes to eradicate this natural hesitation produces an artificial, sterile facsimile of consciousness.
+
+Ultimately, cultivating an appreciation for prose silence demands an epistemic surrender. Writers must overcome the narcissistic urge to dictate every semantic boundary, recognizing that words derive their enduring resonance exclusively from the pregnant stillness against which they are placed."""
+        },
+        # ================= A1, A2, B2, C1 & C2 EMAILS =================
+        {
+            "id": "email-004",
+            "title": "Invitation to My Birthday Picnic",
+            "category": "emails",
+            "topic": "Celebration",
+            "level": "A1",
+            "status": "published",
+            "visibility": "public",
+            "author_name": "Sara Miller",
+            "description": "A very simple, clear party invitation email for friends with time and place.",
+            "tags": ["Birthday", "Picnic", "Friends", "Simple"],
+            "word_count": 92,
+            "reading_time_minutes": 1,
+            "is_sample": True,
+            "created_at": base_time - timedelta(days=2),
+            "updated_at": base_time - timedelta(days=2),
+            "content": """Hi Maria,
+
+How are you? 
+
+Next Saturday is my birthday! I am very happy. I want to celebrate with my friends. 
+
+We will have a picnic in the park near my house at 2:00 in the afternoon. We will eat cake, fruit, and sandwiches. We will also play music.
+
+Can you come to my party? Please tell me before Friday. 
+
+I hope to see you there!
+
+Love,  
+Sara"""
+        },
+        {
+            "id": "email-005",
+            "title": "Meeting at the Coffee Shop on Friday",
+            "category": "emails",
+            "topic": "Casual Catchup",
+            "level": "A2",
+            "status": "published",
+            "visibility": "public",
+            "author_name": "Tom Bradley",
+            "description": "An elementary friendly email arranging a coffee catchup after work.",
+            "tags": ["Coffee", "Catchup", "Plans", "Friendly"],
+            "word_count": 140,
+            "reading_time_minutes": 1,
+            "is_sample": True,
+            "created_at": base_time - timedelta(days=2),
+            "updated_at": base_time - timedelta(days=2),
+            "content": """Hi James,
+
+I hope you are having a nice week. 
+
+I am writing to see if you are free this Friday afternoon. We haven't talked for a long time, and I want to hear about your summer holiday in Spain.
+
+Are you free around 4:30 p.m.? We could meet at the Central Coffee Shop on King Street. They have great coffee and very quiet tables in the back. If you are busy at that time, Saturday morning is also good for me.
+
+Please let me know which time is better for you. 
+
+See you soon,  
+Tom"""
+        },
+        {
+            "id": "email-006",
+            "title": "Project Coordination: Q3 Marketing Launch Timeline",
+            "category": "emails",
+            "topic": "Workplace Project",
+            "level": "B2",
+            "status": "published",
+            "visibility": "public",
+            "author_name": "Rachel Vance",
+            "description": "A well-structured corporate email coordinating deliverables, deadlines, and review cycles.",
+            "tags": ["Workplace", "Project", "Marketing", "Coordination"],
+            "word_count": 248,
+            "reading_time_minutes": 1,
+            "is_sample": True,
+            "created_at": base_time - timedelta(days=1),
+            "updated_at": base_time - timedelta(days=1),
+            "content": """Dear Team,
+
+Following our strategy briefing yesterday, I am writing to outline the operational milestones for our upcoming Q3 promotional campaign. Our primary objective is to finalize all digital collateral by Friday, August 18th to allow sufficient time for stakeholder sign-off.
+
+Please take note of the agreed deadlines:
+
+1. Copywriting & Asset Drafting: All promotional headlines, case study snippets, and email newsletters must be submitted to the shared folder by Tuesday, August 12th at 5:00 p.m.
+2. Design & Layout Review: Marcus's team will integrate the revised visual identity and brand guidelines by Thursday, August 14th.
+3. Quality Assurance & Legal Compliance: The legal affairs committee will review customer privacy disclosures and prize draw terms on Monday, August 17th.
+
+Should anyone anticipate bottlenecks regarding translation files or localized image assets, please alert me by tomorrow noon so that we can reallocate resources accordingly. 
+
+We will hold a concise twenty-minute stand-up on Wednesday morning via video conference to address any outstanding dependencies.
+
+Thank you for your dedicated efforts on this launch.
+
+Best regards,  
+Rachel Vance  
+Senior Campaign Project Manager"""
+        },
+        {
+            "id": "email-007",
+            "title": "Strategic Partnership Memorandum & Executive Overview",
+            "category": "emails",
+            "topic": "Executive Strategy",
+            "level": "C1",
+            "status": "published",
+            "visibility": "public",
+            "author_name": "Eleanor Sterling",
+            "description": "An advanced executive email detailing cross-institutional syndication and governance protocols.",
+            "tags": ["Executive", "Partnership", "Strategy", "Advanced"],
+            "word_count": 310,
+            "reading_time_minutes": 2,
+            "is_sample": True,
+            "created_at": base_time - timedelta(days=1),
+            "updated_at": base_time - timedelta(days=1),
+            "content": """Dear Marcus,
+
+I am writing to summarize the overarching consensus reached during our executive consortium yesterday regarding the proposed cross-border educational technology alliance.
+
+Both steering committees concurred that consolidating our respective instructional platforms presents an exceptional opportunity to accelerate digital literacy initiatives across Central Europe. By harmonizing our proprietary adaptive learning algorithms with your extensive network of accredited academic institutions, we can establish an unprecedented benchmark for pedagogy-driven software solutions.
+
+To ensure governance equilibrium and mitigate operational friction, we suggest formalizing the following preliminary milestones prior to executing the definitive joint venture agreement:
+
+1. Regulatory & Data Sovereign Compliance: Our respective legal counsels will conduct a coordinated audit assessing GDPR compliance, specifically focusing on cross-border student telemetry encryption standards.
+2. Interoperability Testing: A technical taskforce will evaluate API integration parameters, targeting a latency threshold under 120 milliseconds across regional nodes.
+3. Steering Committee Composition: The governing board will maintain egalitarian representation, consisting of three delegates from each organization alongside an independent pedagogical ombudsperson.
+
+Provided your executive board concurs with the enclosed memorandum of understanding, we propose convening the formal signing ceremony in Zurich on October 14th.
+
+I look forward to your considered perspective.
+
+Warm personal regards,  
+Eleanor Sterling  
+Chief Executive Officer"""
+        },
+        {
+            "id": "email-008",
+            "title": "Diplomatic Communiqué & Multi-Lateral Protocol Directive",
+            "category": "emails",
+            "topic": "Diplomatic Protocol",
+            "level": "C2",
+            "status": "published",
+            "visibility": "public",
+            "author_name": "Ambassador Henri de Beaufort",
+            "description": "A masterfully nuanced diplomatic dispatch establishing bilateral negotiating frameworks and multilateral compliance obligations.",
+            "tags": ["Diplomacy", "Governance", "Policy", "Mastery"],
+            "word_count": 380,
+            "reading_time_minutes": 2,
+            "is_sample": True,
+            "created_at": base_time - timedelta(days=1),
+            "updated_at": base_time - timedelta(days=1),
+            "content": """Excellency,
+
+I have the honour to convey to your esteemed delegation the supplementary protocols formulated in the wake of the plenary deliberations on maritime boundary demarcations and transboundary environmental stewardship.
+
+While the preliminary accords articulated during the Geneva summit represent a salutary convergence of sovereign interests, sustained progress remains contingent upon reconciling diverging interpretations of jurisdictional sovereignty within contiguous exclusive economic zones. The persistence of unilateral enforcement measures threatens to undermine the delicate multilateral equilibrium so painstakingly cultivated over the past triennium.
+
+To obviate diplomatic impasse and insulate bilateral relations from precipitous escalation, my government advocates for the immediate convening of an extraordinary conciliation panel under the auspices of the Permanent Court of Arbitration. Such an institutional mechanism would afford our respective technical delegations the requisite neutral forum to scrutinize hydrographic surveys, establish binding resource extraction quotas, and institute joint surveillance protocols without prejudice to either party’s definitive territorial claims.
+
+Furthermore, we respectfully submit that the interim cessation of exploratory drilling along the contested Continental Shelf constitutes an indispensable prerequisite for cultivating mutual trust. We remain steadfast in our conviction that international law and multilateral dialogue provide the sole legitimate architecture through which enduring regional stability may be achieved.
+
+Please accept, Excellency, the renewed assurances of my highest consideration and distinguished esteem.
+
+Henri de Beaufort  
+Special Envoy for Maritime & Multilateral Affairs"""
         }
     ]
