@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   ArrowLeft,
   BookOpen,
   Check,
   CheckCircle2,
   Clock,
+  ExternalLink,
   Feather,
-  Flame,
+  Heart,
   Palette,
   Share2,
   Sparkles,
@@ -15,74 +16,113 @@ import {
   Volume2,
   VolumeX,
 } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
 import confetti from 'canvas-confetti';
-
+import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
+import { useAuth } from '@/context/AuthContext';
 import { useTheme } from '@/context/ThemeContext';
-import { ReadingHighlight } from '@/types';
-import { AIReviewModal } from '@/components/AIReviewModal';
 import { WordPopup } from '@/components/WordPopup';
+import { AIReviewModal } from '@/components/AIReviewModal';
+import { ReadingHighlight } from '@/types';
 
 export const ReaderPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { readingWidth, fontSize, setIsCustomizerOpen } = useTheme();
+  const { user } = useAuth();
+  const { theme, font, fontSize, readingWidth, setIsCustomizerOpen } = useTheme();
 
-  const [popupWord, setPopupWord] = useState<string>('');
+  const [popupWord, setPopupWord] = useState<string | null>(null);
   const [popupPos, setPopupPos] = useState<{ top: number; left: number } | null>(null);
-  
-  // AI Review Modal State
-  const [isAIModalOpen, setIsAIModalOpen] = useState(false);
-  const [aiData, setAIData] = useState<ReadingHighlight | null>(null);
-  const [isAILoading, setIsAILoading] = useState(false);
-
-  // Finished Reading State
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [isFinishing, setIsFinishing] = useState(false);
   const [celebrationMsg, setCelebrationMsg] = useState<string | null>(null);
 
-  // Audio speech synthesis
-  const [isSpeaking, setIsSpeaking] = useState(false);
+  // AI Modal
+  const [isAIModalOpen, setIsAIModalOpen] = useState(false);
+  const [aiData, setAiData] = useState<ReadingHighlight | null>(null);
+  const [isAILoading, setIsAILoading] = useState(false);
 
+  // Scroll Progress
+  const [readingProgress, setReadingProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        const currentProgress = (window.scrollY / totalHeight) * 100;
+        setReadingProgress(Math.min(100, Math.max(0, currentProgress)));
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Fetch writing
   const { data: writing, isLoading, error } = useQuery({
     queryKey: ['writing', id],
-    queryFn: () => api.getWriting(id!),
+    queryFn: () => (id ? api.getWriting(id) : Promise.reject('No ID')),
     enabled: !!id,
+    retry: 2,
   });
 
-  const handleWordClick = (e: React.MouseEvent<HTMLElement>) => {
-    const selection = window.getSelection()?.toString().trim();
-    const target = e.target as HTMLElement;
-    const clickedWord = selection || target.innerText?.trim();
+  // Speech synthesis cleanup
+  useEffect(() => {
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
 
-    if (clickedWord && clickedWord.length > 2 && /^[a-zA-Z'-]+$/.test(clickedWord)) {
-      const rect = target.getBoundingClientRect();
-      setPopupWord(clickedWord);
-      setPopupPos({
-        top: rect.top + window.scrollY,
-        left: rect.left + window.scrollX,
-      });
+  const toggleSpeech = () => {
+    if (!('speechSynthesis' in window) || !writing) return;
+
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+    } else {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(writing.content);
+      utterance.rate = 0.95;
+      utterance.pitch = 1.0;
+      utterance.onend = () => setIsSpeaking(false);
+      utterance.onerror = () => setIsSpeaking(false);
+      window.speechSynthesis.speak(utterance);
+      setIsSpeaking(true);
+    }
+  };
+
+  const handleWordClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (target && target.tagName === 'SPAN') {
+      const word = target.innerText.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?"'’]/g, '').trim();
+      if (word && word.length > 1) {
+        const rect = target.getBoundingClientRect();
+        setPopupWord(word);
+        setPopupPos({
+          top: rect.bottom + window.scrollY + 6,
+          left: rect.left + window.scrollX,
+        });
+      }
     }
   };
 
   const handleAIReviewClick = async () => {
     if (!writing) return;
     setIsAIModalOpen(true);
-    if (!aiData) {
-      setIsAILoading(true);
-      try {
-        const res = await api.getReadingHighlights({
-          title: writing.title,
-          content: writing.content,
-          category: writing.category,
-        });
-        setAIData(res);
-      } catch (err) {
-        console.error('Error fetching AI highlights:', err);
-      } finally {
-        setIsAILoading(false);
-      }
+    setIsAILoading(true);
+    try {
+      const res = await api.getReadingHighlights({
+        title: writing.title,
+        content: writing.content,
+        category: writing.category,
+      });
+      setAiData(res);
+    } catch (err) {
+      console.error('Failed to generate AI review:', err);
+    } finally {
+      setIsAILoading(false);
     }
   };
 
@@ -91,51 +131,46 @@ export const ReaderPage: React.FC = () => {
     setIsFinishing(true);
 
     try {
-      const res = await api.finishReading({
+      // Trigger confetti celebration!
+      try {
+        confetti({
+          particleCount: 120,
+          spread: 70,
+          origin: { y: 0.7 },
+          colors: ['#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ec4899'],
+        });
+      } catch (e) {
+        // Safe confetti fallback
+      }
+
+      await api.finishReading({
         writing_id: writing.id,
         writing_title: writing.title,
         category: writing.category,
         word_count: writing.word_count,
       });
-
       setIsFinished(true);
-      setCelebrationMsg(res.message);
-
-      // Trigger celebratory confetti burst!
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.7 },
-        colors: ['#7c5cfc', '#f59e0b', '#10b981', '#3b82f6'],
-      });
+      setCelebrationMsg(`Outstanding! You finished "${writing.title}". Today's count updated.`);
     } catch (err) {
-      console.error('Error recording completion:', err);
+      console.error('Failed to log reading:', err);
+      // Still celebrate UI-side
+      setIsFinished(true);
+      setCelebrationMsg(`Congratulations on finishing "${writing.title}"!`);
     } finally {
       setIsFinishing(false);
     }
   };
 
-  const toggleSpeech = () => {
-    if (!('speechSynthesis' in window) || !writing) return;
-    if (isSpeaking) {
-      window.speechSynthesis.cancel();
-      setIsSpeaking(false);
-    } else {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(writing.content);
-      utterance.rate = 0.95;
-      utterance.onend = () => setIsSpeaking(false);
-      utterance.onerror = () => setIsSpeaking(false);
-      window.speechSynthesis.speak(utterance);
-      setIsSpeaking(true);
-    }
-  };
-
   if (isLoading) {
     return (
-      <div className="mx-auto max-w-2xl py-24 text-center">
-        <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-        <p className="mt-4 font-serif text-base text-muted-foreground">Preparing reader...</p>
+      <div className="mx-auto max-w-3xl space-y-6 py-12 animate-pulse">
+        <div className="h-8 w-40 rounded-xl bg-secondary" />
+        <div className="h-14 w-full rounded-2xl bg-secondary" />
+        <div className="space-y-3 pt-6">
+          <div className="h-4 w-full rounded bg-secondary" />
+          <div className="h-4 w-5/6 rounded bg-secondary" />
+          <div className="h-4 w-4/6 rounded bg-secondary" />
+        </div>
       </div>
     );
   }
@@ -144,11 +179,15 @@ export const ReaderPage: React.FC = () => {
     return (
       <div className="mx-auto max-w-md py-20 text-center">
         <BookOpen className="mx-auto h-12 w-12 text-muted-foreground/50" />
-        <h2 className="mt-4 font-serif text-xl font-bold text-foreground">Writing Not Found</h2>
-        <p className="mt-1 text-xs text-muted-foreground">This piece might have been moved or removed.</p>
+        <h2 className="mt-4 font-serif text-2xl font-bold text-foreground">
+          Writing Not Found
+        </h2>
+        <p className="mt-2 text-xs text-muted-foreground">
+          The requested piece could not be loaded or may have been removed.
+        </p>
         <button
           onClick={() => navigate(-1)}
-          className="mt-6 inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground"
+          className="btn-tactile-3d mt-6 inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 text-xs font-bold text-primary-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
           <span>Go Back</span>
@@ -170,6 +209,14 @@ export const ReaderPage: React.FC = () => {
   return (
     <div className="relative pb-24">
       
+      {/* Dynamic 3D Reading Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-border/40">
+        <div
+          className="h-full bg-gradient-to-r from-primary via-accent to-primary transition-all duration-150"
+          style={{ width: `${readingProgress}%` }}
+        />
+      </div>
+
       {/* Top Reading Navigation Bar */}
       <div className="sticky top-16 z-30 mb-8 border-b border-border/50 bg-background/90 backdrop-blur-md py-3 transition-colors">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4">
@@ -185,8 +232,8 @@ export const ReaderPage: React.FC = () => {
             {/* Audio Listen */}
             <button
               onClick={toggleSpeech}
-              className={`flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium transition-colors ${
-                isSpeaking ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
+              className={`flex items-center gap-1.5 rounded-xl border border-border px-3 py-1.5 text-xs font-semibold transition-all ${
+                isSpeaking ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
               }`}
               title={isSpeaking ? 'Stop audio' : 'Listen to read aloud'}
             >
@@ -197,7 +244,7 @@ export const ReaderPage: React.FC = () => {
             {/* Customizer */}
             <button
               onClick={() => setIsCustomizerOpen(true)}
-              className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-secondary hover:text-foreground"
+              className="flex items-center gap-1.5 rounded-xl border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:bg-secondary hover:text-foreground"
               title="Appearance & Typography"
             >
               <Palette className="h-3.5 w-3.5" />
@@ -207,25 +254,25 @@ export const ReaderPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Reading Canvas */}
-      <article className={`mx-auto ${widthClass} px-4 transition-all duration-200`}>
+      {/* Main 3D Editorial Book Canvas */}
+      <article className={`mx-auto ${widthClass} px-6 sm:px-12 py-10 rounded-4xl book-3d-canvas border border-border/80 transition-all duration-300 shadow-2xl`}>
         
         {/* Article Header */}
-        <header className="mb-8 border-b border-border/80 pb-8 text-center sm:text-left">
+        <header className="mb-10 border-b border-border/80 pb-8 text-center sm:text-left">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-            <span className="rounded-md border border-border bg-secondary/80 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-primary">
+            <span className="rounded-lg border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary">
               {writing.category}
             </span>
-            <span className="rounded-md bg-secondary px-2.5 py-0.5 text-xs font-bold text-muted-foreground">
+            <span className="rounded-lg bg-secondary px-3 py-1 text-xs font-bold text-muted-foreground">
               CEFR Level {writing.level}
             </span>
-            <span className="text-xs text-muted-foreground flex items-center gap-1 ml-1">
-              <Clock className="h-3 w-3" />
+            <span className="text-xs text-muted-foreground flex items-center gap-1 ml-1 font-medium">
+              <Clock className="h-3.5 w-3.5" />
               {writing.reading_time_minutes} min read ({writing.word_count} words)
             </span>
           </div>
 
-          <h1 className="mt-4 font-serif text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground leading-tight">
+          <h1 className="mt-5 font-serif text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground leading-[1.18]">
             {writing.title}
           </h1>
 
@@ -240,7 +287,7 @@ export const ReaderPage: React.FC = () => {
               {writing.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-md border border-border/60 bg-secondary/30 px-2 py-0.5 text-[11px] text-muted-foreground"
+                  className="rounded-md border border-border/60 bg-secondary/40 px-2 py-0.5 text-[11px] text-muted-foreground font-medium"
                 >
                   #{tag}
                 </span>
@@ -249,7 +296,7 @@ export const ReaderPage: React.FC = () => {
           )}
         </header>
 
-        {/* Text Content */}
+        {/* Text Content with Word Dictionary on Click */}
         <div
           onClick={handleWordClick}
           className={`${fontClass} leading-relaxed text-foreground space-y-6 select-text cursor-text`}
@@ -259,7 +306,7 @@ export const ReaderPage: React.FC = () => {
               {paragraph.split(' ').map((word, wIdx) => (
                 <span
                   key={wIdx}
-                  className="hover:bg-primary/15 hover:rounded-sm transition-colors cursor-pointer"
+                  className="hover:bg-primary/20 hover:rounded-sm transition-colors cursor-pointer"
                 >
                   {word}{' '}
                 </span>
@@ -270,9 +317,9 @@ export const ReaderPage: React.FC = () => {
 
         {/* Celebratory Completion Alert if Finished */}
         {celebrationMsg && (
-          <div className="mt-12 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-5 text-center animate-fade-in">
-            <CheckCircle2 className="mx-auto h-8 w-8 text-emerald-500" />
-            <h4 className="mt-2 font-serif text-lg font-bold text-foreground">
+          <div className="mt-12 rounded-3xl border border-emerald-500/40 bg-emerald-500/10 p-6 text-center animate-fade-in shadow-lg">
+            <CheckCircle2 className="mx-auto h-10 w-10 text-emerald-500" />
+            <h4 className="mt-3 font-serif text-xl font-bold text-foreground">
               {celebrationMsg}
             </h4>
             <p className="mt-1 text-xs text-muted-foreground">
@@ -280,7 +327,7 @@ export const ReaderPage: React.FC = () => {
             </p>
             <Link
               to="/achievements"
-              className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+              className="btn-tactile-3d mt-4 inline-flex items-center gap-1.5 rounded-2xl px-5 py-2.5 text-xs font-bold text-primary-foreground"
             >
               <span>View Reading Achievements</span>
               <span>→</span>
@@ -296,7 +343,7 @@ export const ReaderPage: React.FC = () => {
           {/* Button 1: AI Review & Highlights */}
           <button
             onClick={handleAIReviewClick}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl border border-primary/40 bg-primary/10 px-6 py-3.5 text-sm font-semibold text-primary transition-all hover:bg-primary/20 hover:scale-[1.02] shadow-xs"
+            className="btn-tactile-secondary w-full sm:w-auto flex items-center justify-center gap-2 rounded-2xl border-primary/40 px-6 py-3.5 text-sm font-bold text-primary"
           >
             <Sparkles className="h-4 w-4" />
             <span>🤖 AI Review & Learning Highlights</span>
@@ -306,10 +353,10 @@ export const ReaderPage: React.FC = () => {
           <button
             onClick={handleFinishedReading}
             disabled={isFinished || isFinishing}
-            className={`w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold transition-all shadow-md ${
+            className={`btn-tactile-3d w-full sm:w-auto flex items-center justify-center gap-2 rounded-2xl px-7 py-3.5 text-sm font-bold ${
               isFinished
-                ? 'border border-emerald-500/40 bg-emerald-500/20 text-emerald-500 cursor-default'
-                : 'bg-primary text-primary-foreground hover:bg-primary-hover hover:scale-[1.02]'
+                ? 'border border-emerald-500/40 bg-emerald-500/20 text-emerald-400 cursor-default opacity-90'
+                : 'text-primary-foreground'
             }`}
           >
             {isFinished ? (
@@ -329,12 +376,17 @@ export const ReaderPage: React.FC = () => {
       </article>
 
       {/* Dictionary / Vocabulary Popup */}
-      <WordPopup
-        word={popupWord}
-        position={popupPos}
-        onClose={() => setPopupPos(null)}
-        sourceTitle={writing.title}
-      />
+      {popupWord && popupPos && (
+        <WordPopup
+          word={popupWord}
+          position={popupPos}
+          onClose={() => {
+            setPopupPos(null);
+            setPopupWord(null);
+          }}
+          sourceTitle={writing.title}
+        />
+      )}
 
       {/* AI Review Deep Dive Modal */}
       <AIReviewModal

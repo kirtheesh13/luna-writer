@@ -218,10 +218,14 @@
 }
 
 /* =========================================================================
-   3D PERSPECTIVE & DEPTH UTILITIES
+   3D PERSPECTIVE, TACTILE & RESPONSIVE DEPTH SYSTEM
    ========================================================================= */
 .perspective-1000 {
   perspective: 1000px;
+}
+
+.perspective-1500 {
+  perspective: 1500px;
 }
 
 .perspective-2000 {
@@ -236,47 +240,162 @@
   backface-visibility: hidden;
 }
 
-/* 3D Interactive Card Lift */
+/* 3D Depth Elevation Layers (Used inside preserve-3d containers) */
+.translate-z-xs {
+  transform: translateZ(8px);
+}
+
+.translate-z-sm {
+  transform: translateZ(16px);
+}
+
+.translate-z-md {
+  transform: translateZ(28px);
+}
+
+.translate-z-lg {
+  transform: translateZ(42px);
+}
+
+.translate-z-xl {
+  transform: translateZ(58px);
+}
+
+/* Responsive 3D Interactive Card Lift with Ambient Light Bloom */
 .card-3d-interactive {
   transform-style: preserve-3d;
-  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  will-change: transform, box-shadow;
 }
 
 .card-3d-interactive:hover {
-  transform: translateY(-8px) scale(1.015) rotateX(2deg) rotateY(-1.5deg);
-  box-shadow: 0 20px 40px -10px hsl(var(--primary) / 0.25), 0 10px 20px -5px rgba(0,0,0,0.4);
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 20px 35px -10px hsl(var(--primary) / 0.25), 0 8px 16px -4px rgba(0, 0, 0, 0.35);
 }
 
-/* 3D Embossed Button */
-.btn-3d-primary {
+/* Modern Tactile 3D Button (Creative, sleek, responsive, not arcade-clunky) */
+.btn-3d-primary,
+.btn-tactile-3d {
   position: relative;
-  transition: all 0.15s ease-out;
-  box-shadow: 0 5px 0 0 hsl(var(--primary-hover)), 0 8px 16px -2px hsl(var(--primary) / 0.4);
+  isolation: isolate;
+  background: linear-gradient(180deg, hsl(var(--primary)) 0%, hsl(var(--primary-hover)) 100%);
+  border: 1px solid hsl(var(--primary) / 0.8);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.28),
+    0 4px 14px 0 hsl(var(--primary) / 0.38),
+    0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
 }
 
-.btn-3d-primary:hover {
+.btn-3d-primary:hover,
+.btn-tactile-3d:hover {
   transform: translateY(-2px);
-  box-shadow: 0 7px 0 0 hsl(var(--primary-hover)), 0 12px 24px -2px hsl(var(--primary) / 0.5);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.38),
+    0 8px 24px 0 hsl(var(--primary) / 0.55),
+    0 2px 6px 0 rgba(0, 0, 0, 0.35);
 }
 
-.btn-3d-primary:active {
-  transform: translateY(3px);
-  box-shadow: 0 2px 0 0 hsl(var(--primary-hover)), 0 4px 8px -1px hsl(var(--primary) / 0.3);
+.btn-3d-primary:active,
+.btn-tactile-3d:active {
+  transform: translateY(1px) scale(0.985);
+  box-shadow: 
+    inset 0 2px 4px 0 rgba(0, 0, 0, 0.35),
+    0 2px 6px 0 hsl(var(--primary) / 0.25);
 }
 
-/* 3D Glassmorphism Panel */
+/* Tactile Secondary Button */
+.btn-tactile-secondary {
+  position: relative;
+  background: hsl(var(--card) / 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid hsl(var(--border));
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+    0 4px 12px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-tactile-secondary:hover {
+  transform: translateY(-2px);
+  background: hsl(var(--card-hover));
+  border-color: hsl(var(--primary) / 0.5);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15),
+    0 8px 20px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-tactile-secondary:active {
+  transform: translateY(1px) scale(0.985);
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* 3D Glassmorphism Panel with Ambient Reflection */
 .glass-panel-3d {
   background: radial-gradient(135% 100% at 50% 0%, hsl(var(--card) / 0.85) 0%, hsl(var(--card) / 0.65) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid hsl(var(--border) / 0.7);
-  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 20px 45px -10px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.25);
 }
 
-/* 3D Floating Celestial Sphere */
-.sphere-3d-glow {
-  background: radial-gradient(circle at 35% 30%, hsl(var(--primary) / 0.9) 0%, hsl(var(--accent) / 0.7) 45%, hsl(var(--card)) 85%);
-  box-shadow: inset -8px -10px 25px rgba(0,0,0,0.6), 0 0 50px 10px hsl(var(--primary) / 0.45);
+/* 3D Editorial Book Spine & Reading Canvas */
+.book-3d-canvas {
+  position: relative;
+  box-shadow: 
+    -12px 0 28px -8px rgba(0, 0, 0, 0.3),
+    12px 0 28px -8px rgba(0, 0, 0, 0.3),
+    0 24px 48px -12px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  background: hsl(var(--card));
+}
+
+.book-3d-canvas::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 14px;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.05) 50%, transparent 100%);
+  pointer-events: none;
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
+}
+
+/* Dynamic Holographic Border Beam */
+.holographic-glow {
+  position: relative;
+}
+.holographic-glow::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.6), transparent 50%, hsl(var(--accent) / 0.6));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Organic 3D Floating Animation */
+@keyframes float3D {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+.animate-float-3d {
+  animation: float3D 6s ease-in-out infinite;
 }
 
 /* Reading Typography */

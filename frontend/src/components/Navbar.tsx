@@ -94,9 +94,9 @@ export const Navbar: React.FC = () => {
           {/* Writing Studio CTA Button */}
           <Link
             to="/studio"
-            className="hidden items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow sm:inline-flex"
+            className="btn-tactile-3d hidden items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold text-primary-foreground sm:inline-flex"
           >
-            <Feather className="h-4 w-4" />
+            <Feather className="h-3.5 w-3.5" />
             <span>Write</span>
           </Link>
 
