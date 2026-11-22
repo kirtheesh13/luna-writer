@@ -25,7 +25,7 @@ import { api } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import { useTheme } from '@/context/ThemeContext';
 import { Interactive3DCard } from '@/components/Interactive3DCard';
-import { Celestial3DScene } from '@/components/Celestial3DScene';
+import { LunaHero3DArt } from '@/components/LunaHero3DArt';
 
 export const HomePage: React.FC = () => {
   const { user, openAuthModal } = useAuth();
@@ -210,51 +210,9 @@ export const HomePage: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Hero Column: 3D Celestial Open Book with Feather Quill & Floating Badges */}
-          <div className="lg:col-span-5 relative flex items-center justify-center min-h-[400px] sm:min-h-[460px] preserve-3d">
-            
-            {/* Ambient Background Aura */}
-            <div className="pointer-events-none absolute h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
-
-            {/* The 3D Book & Quill Canvas */}
-            <Celestial3DScene className="w-full h-full" />
-
-            {/* Floating 3D Badge 1: CEFR International Standard */}
-            <div className="absolute -top-2 left-2 sm:-left-4 rounded-2xl border border-border/80 bg-card/90 px-4 py-2.5 shadow-2xl backdrop-blur-2xl translate-z-lg animate-float-3d">
-              <div className="flex items-center gap-2.5">
-                <span className="flex h-3 w-3 rounded-full bg-emerald-400 shadow-sm animate-pulse" />
-                <div>
-                  <span className="text-xs font-bold text-foreground block">CEFR A1 to C2 Standard</span>
-                  <span className="text-[10px] text-muted-foreground block">34 Complete Write-Ups Loaded</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Floating 3D Badge 2: AI Gemini Power */}
-            <div
-              className="absolute -bottom-2 right-2 sm:-right-4 rounded-2xl border border-border/80 bg-card/90 px-4 py-2.5 shadow-2xl backdrop-blur-2xl translate-z-lg animate-float-3d"
-              style={{ animationDelay: '1.5s' }}
-            >
-              <div className="flex items-center gap-2.5">
-                <Sparkles className="h-4 w-4 text-primary" />
-                <div>
-                  <span className="text-xs font-bold text-foreground block">Gemini 2.5 AI Mentor</span>
-                  <span className="text-[10px] text-muted-foreground block">Real-Time Quality Check & A1 Gate</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Floating 3D Badge 3: 100% Autosave Vault */}
-            <div className="hidden sm:block absolute top-1/2 -right-6 -translate-y-1/2 rounded-2xl border border-border/80 bg-card/90 px-3.5 py-2 shadow-2xl backdrop-blur-2xl translate-z-md">
-              <div className="flex items-center gap-2 text-xs font-bold text-foreground">
-                <ShieldCheck className="h-4 w-4 text-emerald-400" />
-                <div>
-                  <span>Auto-Save Protected</span>
-                  <span className="text-[9px] text-muted-foreground block font-normal">Private Vault Enabled</span>
-                </div>
-              </div>
-            </div>
-
+          {/* Right Hero Column: 3D Interactive Masterpiece Artwork */}
+          <div className="lg:col-span-5 relative flex items-center justify-center min-h-[420px] preserve-3d">
+            <LunaHero3DArt className="w-full" />
           </div>
 
         </div>
