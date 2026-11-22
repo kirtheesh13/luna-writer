@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
@@ -10,6 +10,7 @@ import {
   Flame,
   Globe,
   Layers,
+  Lightbulb,
   Mail,
   Moon,
   Scroll,
@@ -42,6 +43,14 @@ export const HomePage: React.FC = () => {
     retry: 1,
   });
 
+  const wordsOfMoment = [
+    { word: 'Luminous', type: 'adj.', def: 'Radiating or reflecting light; shining, inspiring clarity.' },
+    { word: 'Resonant', type: 'adj.', def: 'Deep, clear, and continuing to evoke meaning long after reading.' },
+    { word: 'Serendipity', type: 'n.', def: 'The occurrence of valuable discoveries by happy chance.' },
+    { word: 'Eloquent', type: 'adj.', def: 'Fluent, graceful, and deeply persuasive in discourse.' },
+  ];
+  const [wordIdx, setWordIdx] = useState(0);
+
   const categories = [
     {
       id: 'stories',
@@ -49,11 +58,12 @@ export const HomePage: React.FC = () => {
       desc: 'Imaginative narratives, rich sensory descriptions, and gripping character journeys.',
       icon: BookOpen,
       path: '/stories',
-      gradient: 'from-purple-600/25 via-indigo-600/10 to-transparent',
-      borderColor: 'border-purple-500/30 hover:border-purple-400/70',
+      gradient: 'from-purple-900/25 via-indigo-900/10 to-card/90',
+      borderColor: 'border-purple-500/30 hover:border-purple-400/80',
       badge: 'Narrative Craft',
       count: '10 Available',
       badgeColor: 'bg-purple-500/15 text-purple-400 border-purple-500/30',
+      symbol: '✦ Storytelling Sanctuary',
     },
     {
       id: 'articles',
@@ -61,11 +71,12 @@ export const HomePage: React.FC = () => {
       desc: 'Insightful non-fiction, analytical reasoning, and structured educational discourse.',
       icon: Scroll,
       path: '/articles',
-      gradient: 'from-blue-600/25 via-cyan-600/10 to-transparent',
-      borderColor: 'border-blue-500/30 hover:border-blue-400/70',
+      gradient: 'from-blue-900/25 via-cyan-900/10 to-card/90',
+      borderColor: 'border-blue-500/30 hover:border-blue-400/80',
       badge: 'Logical Flow',
       count: '8 Available',
       badgeColor: 'bg-blue-500/15 text-blue-400 border-blue-500/30',
+      symbol: '✦ Analytical Clarity',
     },
     {
       id: 'letters',
@@ -73,11 +84,12 @@ export const HomePage: React.FC = () => {
       desc: 'Formal inquiries, heartfelt personal letters, and persuasive correspondence.',
       icon: Feather,
       path: '/letters',
-      gradient: 'from-amber-600/25 via-orange-600/10 to-transparent',
-      borderColor: 'border-amber-500/30 hover:border-amber-400/70',
+      gradient: 'from-amber-900/25 via-orange-900/10 to-card/90',
+      borderColor: 'border-amber-500/30 hover:border-amber-400/80',
       badge: 'Tone & Empathy',
       count: '8 Available',
       badgeColor: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+      symbol: '✦ Heart & Correspondence',
     },
     {
       id: 'emails',
@@ -85,11 +97,12 @@ export const HomePage: React.FC = () => {
       desc: 'Professional workplace communication, project updates, and polished polite messages.',
       icon: Mail,
       path: '/emails',
-      gradient: 'from-emerald-600/25 via-teal-600/10 to-transparent',
-      borderColor: 'border-emerald-500/30 hover:border-emerald-400/70',
+      gradient: 'from-emerald-900/25 via-teal-900/10 to-card/90',
+      borderColor: 'border-emerald-500/30 hover:border-emerald-400/80',
       badge: 'Concise Clarity',
       count: '8 Available',
       badgeColor: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
+      symbol: '✦ Modern Workplace Mastery',
     },
   ];
 
@@ -97,7 +110,7 @@ export const HomePage: React.FC = () => {
     <div className="space-y-20 pb-16">
       
       {/* =================================================================== */}
-      {/* 3D HERO SECTION: Interactive 3D WebGL Armillary Sphere & Dynamic Depth */}
+      {/* 3D HERO SECTION: 3D Celestial Open Book with Quill & Stardust       */}
       {/* =================================================================== */}
       <section className="perspective-1000 relative overflow-hidden rounded-4xl border border-border/80 glass-panel-3d p-8 sm:p-14 lg:p-16 shadow-2xl">
         
@@ -126,11 +139,25 @@ export const HomePage: React.FC = () => {
               Immerse yourself in four dedicated reading rooms, uncover vocabulary gems on every line, and practice in a private auto-saving studio. When you're ready, let AI verify your work and unlock your publication to the community showcase.
             </p>
 
+            {/* Interactive Word of the Moment Pill */}
+            <div
+              onClick={() => setWordIdx((prev) => (prev + 1) % wordsOfMoment.length)}
+              className="inline-flex items-center gap-2.5 rounded-2xl border border-border/80 bg-secondary/50 px-4 py-2 text-xs text-foreground backdrop-blur-md cursor-pointer hover:border-primary/50 transition-all shadow-xs group"
+              title="Click to reveal another inspiring vocabulary gem"
+            >
+              <Lightbulb className="h-4 w-4 text-amber-500 group-hover:scale-110 transition-transform" />
+              <span>
+                <strong>{wordsOfMoment[wordIdx].word}</strong> ({wordsOfMoment[wordIdx].type}):{' '}
+                <span className="text-muted-foreground">{wordsOfMoment[wordIdx].def}</span>
+              </span>
+              <span className="text-[10px] text-primary font-bold ml-1">✦ Next</span>
+            </div>
+
             {/* 3D Tactile Action Buttons */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <Link
                 to="/stories"
-                className="btn-tactile-3d inline-flex items-center gap-2.5 rounded-2xl px-7 py-3.5 text-sm font-bold text-primary-foreground"
+                className="btn-tactile-3d inline-flex items-center gap-2.5 rounded-2xl px-7 py-3.5 text-sm font-bold text-primary-foreground shadow-lg"
               >
                 <BookOpen className="h-4 w-4" />
                 <span>Explore Stories Library</span>
@@ -183,35 +210,48 @@ export const HomePage: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Hero Column: Interactive Three.js 3D Celestial Canvas with Floating Badges */}
-          <div className="lg:col-span-5 relative flex items-center justify-center min-h-[360px] sm:min-h-[420px] preserve-3d">
+          {/* Right Hero Column: 3D Celestial Open Book with Feather Quill & Floating Badges */}
+          <div className="lg:col-span-5 relative flex items-center justify-center min-h-[400px] sm:min-h-[460px] preserve-3d">
             
-            {/* The Interactive 3D Canvas */}
+            {/* Ambient Background Aura */}
+            <div className="pointer-events-none absolute h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
+
+            {/* The 3D Book & Quill Canvas */}
             <Celestial3DScene className="w-full h-full" />
 
             {/* Floating 3D Badge 1: CEFR International Standard */}
-            <div className="absolute top-4 left-0 sm:-left-4 rounded-2xl border border-white/20 bg-card/90 px-4 py-2.5 shadow-2xl backdrop-blur-xl translate-z-lg animate-float-3d">
-              <div className="flex items-center gap-2">
-                <span className="flex h-3 w-3 rounded-full bg-emerald-400 shadow-sm" />
-                <span className="text-xs font-bold text-foreground">CEFR A1 to C2 Standard</span>
+            <div className="absolute -top-2 left-2 sm:-left-4 rounded-2xl border border-border/80 bg-card/90 px-4 py-2.5 shadow-2xl backdrop-blur-2xl translate-z-lg animate-float-3d">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-3 w-3 rounded-full bg-emerald-400 shadow-sm animate-pulse" />
+                <div>
+                  <span className="text-xs font-bold text-foreground block">CEFR A1 to C2 Standard</span>
+                  <span className="text-[10px] text-muted-foreground block">34 Complete Write-Ups Loaded</span>
+                </div>
               </div>
-              <span className="text-[10px] text-muted-foreground block mt-0.5">International Rubric Engine</span>
             </div>
 
             {/* Floating 3D Badge 2: AI Gemini Power */}
-            <div className="absolute bottom-4 right-0 sm:-right-4 rounded-2xl border border-white/20 bg-card/90 px-4 py-2.5 shadow-2xl backdrop-blur-xl translate-z-lg animate-float-3d" style={{ animationDelay: '1.5s' }}>
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-3.5 w-3.5 text-primary" />
-                <span className="text-xs font-bold text-foreground">Gemini 2.5 AI Mentor</span>
+            <div
+              className="absolute -bottom-2 right-2 sm:-right-4 rounded-2xl border border-border/80 bg-card/90 px-4 py-2.5 shadow-2xl backdrop-blur-2xl translate-z-lg animate-float-3d"
+              style={{ animationDelay: '1.5s' }}
+            >
+              <div className="flex items-center gap-2.5">
+                <Sparkles className="h-4 w-4 text-primary" />
+                <div>
+                  <span className="text-xs font-bold text-foreground block">Gemini 2.5 AI Mentor</span>
+                  <span className="text-[10px] text-muted-foreground block">Real-Time Quality Check & A1 Gate</span>
+                </div>
               </div>
-              <span className="text-[10px] text-muted-foreground block mt-0.5">Structure & Vocabulary Check</span>
             </div>
 
             {/* Floating 3D Badge 3: 100% Autosave Vault */}
-            <div className="hidden sm:block absolute top-1/2 -right-6 -translate-y-1/2 rounded-2xl border border-white/20 bg-card/90 px-3.5 py-2 shadow-2xl backdrop-blur-xl translate-z-md">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
-                <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-                <span>Auto-Save Protected</span>
+            <div className="hidden sm:block absolute top-1/2 -right-6 -translate-y-1/2 rounded-2xl border border-border/80 bg-card/90 px-3.5 py-2 shadow-2xl backdrop-blur-2xl translate-z-md">
+              <div className="flex items-center gap-2 text-xs font-bold text-foreground">
+                <ShieldCheck className="h-4 w-4 text-emerald-400" />
+                <div>
+                  <span>Auto-Save Protected</span>
+                  <span className="text-[9px] text-muted-foreground block font-normal">Private Vault Enabled</span>
+                </div>
               </div>
             </div>
 
@@ -274,6 +314,10 @@ export const HomePage: React.FC = () => {
                     <p className="mt-2 text-xs text-muted-foreground leading-relaxed translate-z-xs">
                       {cat.desc}
                     </p>
+
+                    <div className="mt-4 text-[10px] font-semibold text-primary/80 translate-z-xs">
+                      {cat.symbol}
+                    </div>
                   </div>
 
                   <div className="mt-8 flex items-center justify-between border-t border-border/50 pt-4 text-xs font-semibold text-foreground/80 translate-z-sm">
